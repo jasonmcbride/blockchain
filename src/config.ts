@@ -1,5 +1,5 @@
 const GENESIS_DATA = {
-  timestamp: new Date(),
+  timestamp: new Date().toUTCString(),
   lastHash: '-----',
   hash: 'hash-one',
   data: []

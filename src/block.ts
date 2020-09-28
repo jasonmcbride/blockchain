@@ -1,7 +1,8 @@
 import { GENESIS_DATA } from './config';
+import cryptoHash from './crypto-hash';
 
 class Block {
-  timestamp: Date;
+  timestamp: string;
   lastHash: string;
   hash: string;
   data: any;
@@ -11,7 +12,7 @@ class Block {
     hash,
     data
   }: {
-    timestamp: Date;
+    timestamp: string;
     lastHash: string;
     hash: string;
     data: any;
@@ -27,10 +28,13 @@ class Block {
   }
 
   static mineBlock({ lastBlock, data }: { lastBlock: Block; data: any }) {
+    const timestamp = new Date().toUTCString();
+    const lastHash = lastBlock.hash;
     return new this({
-      timestamp: new Date(),
-      lastHash: lastBlock.hash,
-      data
+      timestamp,
+      lastHash,
+      data,
+      hash: cryptoHash(timestamp, lastHash, data)
     });
   }
 }

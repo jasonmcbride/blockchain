@@ -1,8 +1,9 @@
-import Block from './block';
-import { GENESIS_DATA } from './config';
+import Block from '../block';
+import { GENESIS_DATA } from '../config';
+import cryptoHash from '../crypto-hash';
 
 describe('Block', () => {
-  const timestamp = new Date();
+  const timestamp = new Date().toUTCString();
   const lastHash = 'foo-hash';
   const hash = 'bar-hash';
   const data = ['blockchan', 'data'];
@@ -62,8 +63,10 @@ describe('Block', () => {
       expect(minedBlock.timestamp).not.toEqual(undefined);
     });
 
-    /*it('sets a `hash`', () => {
-      expect(minedBlock.hash).not.toEqual(undefined);
-    });*/
+    it('creates a SHA-256 `hash` based on the proper inputs', () => {
+      expect(minedBlock.hash).toEqual(
+        cryptoHash(minedBlock.timestamp, lastBlock.hash, data)
+      );
+    });
   });
 });
