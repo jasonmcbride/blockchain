@@ -1,9 +1,9 @@
 import { GENESIS_DATA } from './config';
 
 class Block {
-  timestamp: any;
-  lastHash: any;
-  hash: any;
+  timestamp: Date;
+  lastHash: string;
+  hash: string;
   data: any;
   constructor({
     timestamp,
@@ -11,9 +11,9 @@ class Block {
     hash,
     data
   }: {
-    timestamp: any;
-    lastHash: any;
-    hash: any;
+    timestamp: Date;
+    lastHash: string;
+    hash: string;
     data: any;
   }) {
     this.timestamp = timestamp;
@@ -24,6 +24,14 @@ class Block {
 
   static genesis() {
     return new this(GENESIS_DATA);
+  }
+
+  static mineBlock({ lastBlock, data }: { lastBlock: Block; data: any }) {
+    return new this({
+      timestamp: new Date(),
+      lastHash: lastBlock.hash,
+      data
+    });
   }
 }
 

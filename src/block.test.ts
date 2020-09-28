@@ -2,7 +2,7 @@ import Block from './block';
 import { GENESIS_DATA } from './config';
 
 describe('Block', () => {
-  const timestamp = 'date';
+  const timestamp = new Date();
   const lastHash = 'foo-hash';
   const hash = 'bar-hash';
   const data = ['blockchan', 'data'];
@@ -39,5 +39,31 @@ describe('Block', () => {
     it('returns the genesis data', () => {
       expect(genesisBlock).toEqual(GENESIS_DATA);
     });
+  });
+
+  describe('mineBlock()', () => {
+    const lastBlock = Block.genesis();
+    const data = 'minded data';
+    const minedBlock = Block.mineBlock({ lastBlock, data });
+
+    it('returns a Block instance', () => {
+      expect(minedBlock instanceof Block).toBe(true);
+    });
+
+    it('sets the `lastHash` to be `hash` of the lastBlock', () => {
+      expect(minedBlock.lastHash).toEqual(lastBlock.hash);
+    });
+
+    it('sets the `data`', () => {
+      expect(minedBlock.data).toEqual(data);
+    });
+
+    it('sets a `timestamp`', () => {
+      expect(minedBlock.timestamp).not.toEqual(undefined);
+    });
+
+    /*it('sets a `hash`', () => {
+      expect(minedBlock.hash).not.toEqual(undefined);
+    });*/
   });
 });

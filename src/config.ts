@@ -1,5 +1,5 @@
 const GENESIS_DATA = {
-  timestamp: 1,
+  timestamp: new Date(),
   lastHash: '-----',
   hash: 'hash-one',
   data: []
